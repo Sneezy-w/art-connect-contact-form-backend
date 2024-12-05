@@ -4,12 +4,19 @@ const cors = require('cors');
 const { contactValidationRules, validate } = require('./middleware/validate');
 const contactController = require('./controllers/contactController');
 const logger = require('./utils/logger');
+const initDatabase = require('./config/initDatabase');
 
 const app = express();
 
 //app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+// Initialize database table
+initDatabase().catch((error) => {
+  logger.error('Failed to initialize database:', error);
+  process.exit(1);
+});
 
 // Routes
 app.post(
