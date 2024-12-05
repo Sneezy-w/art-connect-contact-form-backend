@@ -34,6 +34,8 @@ app.get('/health', (req, res) => {
   res.status(200).json({ message: 'OK' });
 });
 
+logger.info(JSON.stringify(process.env, null, 2));
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
