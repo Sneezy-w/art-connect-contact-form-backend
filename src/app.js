@@ -1,9 +1,9 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 //const helmet = require("helmet");
-const { contactValidationRules, validate } = require("./middleware/validate");
-const contactController = require("./controllers/contactController");
-const logger = require("./utils/logger");
+const { contactValidationRules, validate } = require('./middleware/validate');
+const contactController = require('./controllers/contactController');
+const logger = require('./utils/logger');
 
 const app = express();
 
@@ -13,11 +13,15 @@ app.use(express.json());
 
 // Routes
 app.post(
-  "/api/contact",
+  '/api/contact',
   contactValidationRules(),
   validate,
   contactController.submitContact
 );
+
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'OK' });
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
