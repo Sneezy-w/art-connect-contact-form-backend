@@ -56,3 +56,6 @@ tmp/
 temp/
 
 
+*.md
+
+cloudformation/
