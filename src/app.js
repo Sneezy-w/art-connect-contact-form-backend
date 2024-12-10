@@ -15,7 +15,7 @@ app.use(express.json());
 // Initialize database table
 initDatabase().catch((error) => {
   logger.error('Failed to initialize database:', error);
-  process.exit(1);
+  //process.exit(1);
 });
 
 // Routes
@@ -34,9 +34,14 @@ app.get('/health', (req, res) => {
   res.status(200).json({ message: 'OK' });
 });
 
-logger.info(JSON.stringify(process.env, null, 2));
+//logger.info(JSON.stringify(process.env, null, 2));
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
-});
+// Move server startup logic to only run if this file is run directly
+if (require.main === module) {
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, () => {
+    logger.info(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
